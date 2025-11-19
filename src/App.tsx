@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import TextInput from './components/TextInput';
 import SettingsPanel from './components/SettingsPanel';
+import OutputCard from './components/OutputCard';
 
-// Stil nesnesi için Tip Tanımlaması (Type Definition)
 interface FontStyle {
   key: string;
   label: string;
@@ -11,12 +11,9 @@ interface FontStyle {
 }
 
 const App: React.FC = () => {
-  // State tanımlarında tip çıkarımı (inference) otomatik yapılır, 
-  // ama açıkça belirtmek öğrenme aşamasında iyidir.
   const [inputText, setInputText] = useState<string>('');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
-  // Stil listesi (Artık FontStyle tipine uymak zorunda)
   const styles: FontStyle[] = [
     { key: 'cursive', label: 'Cursive', example: 'Cursive Style' },
     { key: 'bold', label: 'Bold Seriffed', example: 'Bold Style' },
@@ -25,22 +22,22 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] pb-20">
+    <div className="min-h-screen bg-[#F9FAFB] pb-20 font-sans">
       <Header />
 
       <main className="max-w-3xl mx-auto px-4 pt-24 sm:pt-32">
         
-        {/* Başlık ve Açıklama Bölümü */}
+        {/* Başlık Alanı */}
         <section className="text-center mb-10">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
             Unicode Text Converter
           </h1>
           <p className="text-lg text-gray-500 max-w-xl mx-auto">
-            Transform your text into unique Unicode styles.
+            Transform your text into unique Unicode styles for social media, bios, and beyond.
           </p>
         </section>
 
-        {/* Giriş Alanı Bileşeni */}
+        {/* Giriş Input Bileşeni */}
         <TextInput 
           value={inputText}
           onChange={setInputText}
@@ -49,11 +46,21 @@ const App: React.FC = () => {
           onToggleSettings={() => setIsSettingsOpen(!isSettingsOpen)}
         />
 
-        {/* Ayarlar Paneli (Toggle) */}
+        {/* Ayarlar Paneli */}
         {isSettingsOpen && <SettingsPanel />}
 
-        {/* Dinamik Çıktı Kartları */}
-        
+        {/* Çıktı Kartları */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          {styles.map((style) => (
+            <OutputCard 
+              key={style.key}
+              fontKey={style.key}
+              fontLabel={style.label}
+              example={style.example}
+              inputText={inputText}
+            />
+          ))}
+        </div>
 
       </main>
     </div>
