@@ -1,23 +1,18 @@
 import React from 'react';
 import { Zap } from 'lucide-react';
-
-export interface ConversionSettings {
-  properNounsOnly: boolean;
-  excludeAcronyms: boolean;
-  excludeUrls: boolean;
-}
+import type { ConversionSettings } from '../utils/types';
 
 interface SettingsPanelProps {
   settings: ConversionSettings;
   onToggle: (key: keyof ConversionSettings) => void;
+  t: any; // Çeviri nesnesi
 }
 
-const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onToggle }) => {
-  
+const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onToggle, t }) => {
   const settingItems: { id: keyof ConversionSettings; label: string }[] = [
-    { id: 'properNounsOnly', label: 'Convert only Proper Nouns' },
-    { id: 'excludeAcronyms', label: 'Exclude all Capitalized Acronyms' },
-    { id: 'excludeUrls', label: 'Exclude URLs and Emails' },
+    { id: 'properNounsOnly', label: t.settingProper },
+    { id: 'excludeAcronyms', label: t.settingAcronyms },
+    { id: 'excludeUrls', label: t.settingUrls },
   ];
 
   return (
@@ -27,7 +22,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onToggle }) => 
           <Zap className="w-5 h-5" />
         </span>
         <h2 className="text-lg font-semibold text-gray-800">
-          Smart Conversion Settings
+          {t.settingsTitle}
         </h2>
       </div>
 
@@ -41,8 +36,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onToggle }) => 
             <span className="text-gray-600 group-hover:text-gray-900 transition-colors font-medium">
               {item.label}
             </span>
-            
-            {/* Dinamik Toggle Switch */}
             <div 
               className={`w-12 h-6 flex items-center rounded-full p-1 duration-300 cursor-pointer 
               ${settings[item.id] ? 'bg-gray-800' : 'bg-gray-300'}`}

@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { transformText } from '../utils/textConverter';
-
-export interface ConversionSettings {
-  properNounsOnly: boolean;
-  excludeAcronyms: boolean;
-  excludeUrls: boolean;
-}
+import type { ConversionSettings } from '../utils/types';
 
 interface OutputCardProps {
   inputText: string;
@@ -14,14 +9,11 @@ interface OutputCardProps {
   fontLabel: string;
   example: string;
   settings: ConversionSettings;
+  t: any; // Çeviri nesnesi
 }
 
 const OutputCard: React.FC<OutputCardProps> = ({ 
-  inputText, 
-  fontKey, 
-  fontLabel, 
-  example,
-  settings 
+  inputText, fontKey, fontLabel, example, settings, t
 }) => {
   const [copied, setCopied] = useState<boolean>(false);
 
@@ -31,7 +23,6 @@ const OutputCard: React.FC<OutputCardProps> = ({
 
   const handleCopy = () => {
     if (!finalText) return;
-    
     navigator.clipboard.writeText(finalText)
       .then(() => {
         setCopied(true);
@@ -47,14 +38,12 @@ const OutputCard: React.FC<OutputCardProps> = ({
       
       <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-      {/* Başlık */}
       <div className="flex justify-between items-start mb-3 relative z-10">
         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors">
           {fontLabel}
         </h3>
       </div>
 
-      {/* Çıktı Metni */}
       <div className="flex-grow min-h-[3rem] relative z-10">
         <p className="text-xl text-gray-800 break-words leading-relaxed font-medium selection:bg-blue-100 selection:text-blue-900">
           {finalText}
@@ -70,13 +59,9 @@ const OutputCard: React.FC<OutputCardProps> = ({
               : 'bg-gray-50 text-gray-600 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-200'}`}
         >
           {copied ? (
-            <>
-              <Check className="mr-1.5 w-4 h-4" /> Copied!
-            </>
+            <> <Check className="mr-1.5 w-4 h-4" /> {t.copied} </>
           ) : (
-            <>
-              <Copy className="mr-1.5 w-4 h-4" /> Copy
-            </>
+            <> <Copy className="mr-1.5 w-4 h-4" /> {t.copy} </>
           )}
         </button>
       </div>

@@ -1,7 +1,13 @@
 import React from 'react';
+import type { Language } from '../utils/types';
 
-const Header: React.FC = () => {
-  const languages = ['EN', 'TR', 'FR', 'ES', 'DE'];
+interface HeaderProps {
+  currentLang: Language;
+  setLang: (lang: Language) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ currentLang, setLang }) => {
+  const languages: Language[] = ['EN', 'TR', 'FR', 'ES', 'DE'];
 
   return (
     <header className="fixed top-0 left-0 right-0 p-4 border-b border-gray-200/50 bg-white/70 backdrop-blur-md z-50 transition-all duration-300">
@@ -17,8 +23,12 @@ const Header: React.FC = () => {
         <nav className="hidden sm:flex text-sm text-gray-500 space-x-1 font-medium">
           {languages.map(lang => (
             <button 
-              key={lang} 
-              className="px-3 py-1 rounded-full hover:bg-gray-100 hover:text-blue-600 transition-all duration-200"
+              key={lang}
+              onClick={() => setLang(lang)}
+              className={`px-3 py-1 rounded-full transition-all duration-200 
+                ${currentLang === lang 
+                  ? 'bg-blue-100 text-blue-700 font-bold' 
+                  : 'hover:bg-gray-100 hover:text-blue-600'}`}
             >
               {lang}
             </button>
