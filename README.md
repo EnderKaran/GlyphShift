@@ -4,86 +4,92 @@ Sıradan metinleri, sosyal medya ve biyografiler için dikkat çekici Unicode sa
 
 Bu proje, React, TypeScript ve Tailwind CSS kullanılarak geliştirilmiş, performans odaklı bir "Single-File Component" mimarisini sergiler. Harici ağır NLP kütüphanelerine ihtiyaç duymadan, Regex (Düzenli İfadeler) tabanlı özel bir motor ile metinleri akıllıca analiz eder ve dönüştürür.
 
-Canlı Demoyu Görüntüle (Buraya varsa canlı linkini ekleyebilirsin)
+**[Canlı Demoyu Görüntüle](https://enderkaran.github.io/GlyphShift/)**
 
-(Projenin ekran görüntüsünü buraya ekleyin)
+<img width="1887" height="857" alt="Ekran görüntüsü 2025-11-20 004108" src="https://github.com/user-attachments/assets/e92f9fb1-49e9-49f9-a323-0459eff1bdbd" />
 
-Öne Çıkan Özellikler
+---
+## Öne Çıkan Özellikler
 
 Bu proje, modern frontend geliştirme tekniklerini ve kullanıcı deneyimi (UX) odaklı yaklaşımları birleştirir:
 
-1. Regex Tabanlı Akıllı Analiz Motoru
+### 1. Regex Tabanlı Akıllı Analiz Motoru
 
-Bağlamsal Farkındalık: Harici yapay zeka veya NLP kütüphanesi (örneğin compromise.js) kullanmadan, özel yazılmış Regex algoritmaları ile metni analiz eder.
+- **Bağlamsal Farkındalık:** Harici yapay zeka veya NLP kütüphanesi (örneğin compromise.js) kullanmadan, özel yazılmış Regex algoritmaları ile metni analiz eder.
 
-URL ve E-posta Koruması: Metin içindeki linkleri (https://www.google.com/search?q=google.com) ve e-postaları (test@mail.com) algılar ve bunların bozulmasını engeller.
+- **URL ve E-posta Koruması:** Metin içindeki linkleri (https://www.google.com/search?q=google.com) ve e-postaları (test@mail.com) algılar ve bunların bozulmasını engeller.
 
-Kısaltma (Acronym) Tespiti: Sadece büyük harflerden oluşan kısaltmaları (örneğin NASA, TBMM, USA) tespit eder ve okunabilirliği korumak için dönüştürmez.
+- **Kısaltma (Acronym) Tespiti:** Sadece büyük harflerden oluşan kısaltmaları (örneğin NASA, TBMM, USA) tespit eder ve okunabilirliği korumak için dönüştürmez.
 
-Özel İsim Filtresi: "Sadece Özel İsimleri Çevir" modu ile cümledeki sadece baş harfi büyük kelimeleri (İsimler, Şehirler) hedefler.
+- **Özel İsim Filtresi:** "Sadece Özel İsimleri Çevir" modu ile cümledeki sadece baş harfi büyük kelimeleri (İsimler, Şehirler) hedefler.
 
-2. Zengin Unicode Kütüphanesi & Mapping
+### 2. Zengin Unicode Kütüphanesi & Mapping
 
-8 Farklı Stil: Cursive, Bold, Gothic, Double Struck, Bubble, Square gibi popüler Unicode setlerini içeren kapsamlı bir karakter haritası (CharMap) mimarisi.
+- **8 Farklı Stil:** Cursive, Bold, Gothic, Double Struck, Bubble, Square gibi popüler Unicode setlerini içeren kapsamlı bir karakter haritası (CharMap) mimarisi.
 
-Genişletilebilir Yapı: Yeni bir font eklemek, sadece FONTS objesine yeni bir anahtar-değer seti eklemek kadar basittir.
+- **Genişletilebilir Yapı:** Yeni bir font eklemek, sadece FONTS objesine yeni bir anahtar-değer seti eklemek kadar basittir.
 
-3. Dahili Çoklu Dil Desteği (i18n)
+### 3. Dahili Çoklu Dil Desteği (i18n)
 
-Hafif Çözüm: i18next gibi büyük paketler yerine, React State ve Props kullanılarak geliştirilmiş, sıfır bağımlılıklı (dependency-free) bir yerelleştirme sistemi.
+- **Hafif Çözüm:** i18next gibi büyük paketler yerine, React State ve Props kullanılarak geliştirilmiş, sıfır bağımlılıklı (dependency-free) bir yerelleştirme sistemi.
 
-5 Dil Desteği: İngilizce (EN), Türkçe (TR), Fransızca (FR), İspanyolca (ES) ve Almanca (DE) arasında anlık geçiş imkanı.
+### 4 Dil Desteği: İngilizce (EN), Türkçe (TR), Fransızca (FR), İspanyolca (ES) ve Almanca (DE) arasında anlık geçiş imkanı.
 
-4. Modern UI & Mikro Etkileşimler
+### 5. Modern UI & Mikro Etkileşimler
 
-Glassmorphism & Mesh Gradients: Backdrop-blur ve katmanlı arka planlar kullanılarak oluşturulmuş derinlikli ve modern tasarım.
+- **Glassmorphism & Mesh Gradients:** Backdrop-blur ve katmanlı arka planlar kullanılarak oluşturulmuş derinlikli ve modern tasarım.
 
-Dinamik Etkileşimler: Lucide React ikonları ile zenginleştirilmiş, üzerine gelindiğinde (hover) tepki veren kartlar ve butonlar.
+- **Dinamik Etkileşimler:** Lucide React ikonları ile zenginleştirilmiş, üzerine gelindiğinde (hover) tepki veren kartlar ve butonlar.
 
-Kullanıcı Geri Bildirimi: Kopyalama işlemi sonrası görsel geri bildirim (Buton değişimi, renk geçişi).
+- **Kullanıcı Geri Bildirimi:** Kopyalama işlemi sonrası görsel geri bildirim (Buton değişimi, renk geçişi).
 
-Teknoloji Yığını
+## Teknoloji Yığını
 
 Bu projenin temelini oluşturan ana teknolojiler:
 
-Framework: React 18/19
+- **Framework: React 18/19**
 
-Dil: TypeScript (Tip güvenliği ve Interface yapıları için)
+- **Dil: TypeScript (Tip güvenliği ve Interface yapıları için)**
 
-Stil: Tailwind CSS (Utility-first styling ve animasyonlar)
+- **Stil: Tailwind CSS (Utility-first styling ve animasyonlar)**
 
-İkon Seti: Lucide React
+- **İkon Seti: Lucide React**
 
-Build Aracı: Vite
-
-Başlarken
+- **Build Aracı: Vite**
+--- 
+## Başlarken
 
 Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin.
 
-Kurulum
+### Kurulum
 
-Depoyu Klonlayın:
+1.  **Depoyu Klonlayın:**
 
-git clone [https://github.com/kullaniciadiniz/GlyphShift.git](https://github.com/kullaniciadiniz/GlyphShift.git)
+```bash
+git clone [https://github.com/EnderKaran/GlyphShift.git](https://github.com/EnderKaran/GlyphShift.git)
 cd GlyphShift
+```
+
+2.  **Bağımlılıkları Yükleyin:**
+    ```bash
+    npm install
+    ```
 
 
-Bağımlılıkları Yükleyin:
+3. **Uygulamayı Başlatın:**
 
-npm install
-
-
-Uygulamayı Başlatın:
-
-npm run dev
-
+```bash
+    npm run dev
+   ```
 
 Tarayıcınızda http://localhost:5173 adresine giderek uygulamayı görüntüleyebilirsiniz.
+---
 
-Proje Mimarisi (Single File Logic)
+## Proje Mimarisi (Single File Logic)
 
 Bu proje, belirli bir dağıtım ortamı gereği Tek Dosya (Single Component) mimarisi üzerine kurulmuştur ancak mantıksal olarak katmanlara ayrılmıştır:
 
+```
 src/App.tsx
 │
 ├── 1. TİP TANIMLARI (TYPES)
@@ -106,9 +112,10 @@ src/App.tsx
 │
 └── 6. ANA UYGULAMA (APP)
     └── State Yönetimi ve Bileşenlerin Birleştirilmesi
+```
+---
 
-
-Gelecek Planları
+## Gelecek Planları
 
 [ ] Tarayıcı Eklentisi (Chrome Extension) olarak paketlenmesi.
 
@@ -118,4 +125,3 @@ Gelecek Planları
 
 [ ] Karanlık Mod (Dark Mode) desteği.
 
-Bu proje [Senin Adın] tarafından sevgiyle geliştirilmiştir.
