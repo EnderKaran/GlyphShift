@@ -41,30 +41,33 @@ const OutputCard: React.FC<OutputCardProps> = ({
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-100 transition-all duration-200 flex flex-col h-full group">
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 
+                    hover:shadow-xl hover:border-blue-200 hover:-translate-y-1 
+                    transition-all duration-300 flex flex-col h-full group relative overflow-hidden">
       
+      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
       {/* Başlık */}
-      <div className="flex justify-between items-start mb-3">
-        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider group-hover:text-blue-500 transition-colors">
+      <div className="flex justify-between items-start mb-3 relative z-10">
+        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors">
           {fontLabel}
         </h3>
       </div>
 
       {/* Çıktı Metni */}
-      <div className="flex-grow min-h-[3rem]">
-        <p className="text-xl text-gray-800 break-words leading-relaxed font-medium">
+      <div className="flex-grow min-h-[3rem] relative z-10">
+        <p className="text-xl text-gray-800 break-words leading-relaxed font-medium selection:bg-blue-100 selection:text-blue-900">
           {finalText}
         </p>
       </div>
 
-      {/* Kopyalama Butonu */}
-      <div className="mt-4 pt-4 border-t border-gray-50 flex justify-end">
+      <div className="mt-5 pt-4 border-t border-gray-50 flex justify-end relative z-10">
         <button 
           onClick={handleCopy}
-          className={`flex items-center text-sm font-medium px-3 py-1.5 rounded-lg transition-all duration-200 
+          className={`flex items-center text-sm font-bold px-4 py-2 rounded-xl transition-all duration-200 transform active:scale-95
             ${copied 
-              ? 'bg-green-50 text-green-700 border border-green-200' 
-              : 'bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-700 border border-transparent'}`}
+              ? 'bg-green-500 text-white shadow-lg shadow-green-200 ring-2 ring-green-100' 
+              : 'bg-gray-50 text-gray-600 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-200'}`}
         >
           {copied ? (
             <>

@@ -4,6 +4,7 @@ import TextInput from './components/TextInput';
 import SettingsPanel from './components/SettingsPanel';
 import OutputCard from './components/OutputCard';
 
+// Tip tanımlamaları
 export interface ConversionSettings {
   properNounsOnly: boolean;
   excludeAcronyms: boolean;
@@ -19,9 +20,9 @@ interface FontStyle {
 const App: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
-
+  
   const [settings, setSettings] = useState<ConversionSettings>({
-    properNounsOnly: false, // Başlangıçta kapalı olsun
+    properNounsOnly: false,
     excludeAcronyms: true,
     excludeUrls: false
   });
@@ -30,34 +31,43 @@ const App: React.FC = () => {
     setSettings(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  // Genişletilmiş Font Listesi
   const styles: FontStyle[] = [
     { key: 'cursive', label: 'Script', example: 'Script Style' },
     { key: 'bold', label: 'Bold', example: 'Bold Style' },
-    { key: 'boldItalic', label: 'Bold Italic', example: 'Bold Italic' }, // Yeni
+    { key: 'boldItalic', label: 'Bold Italic', example: 'Bold Italic' },
     { key: 'doubleStruck', label: 'Double Struck', example: 'Double Struck' },
-    { key: 'gothic', label: 'Gothic', example: 'Gothic Style' }, // Yeni
+    { key: 'gothic', label: 'Gothic', example: 'Gothic Style' },
     { key: 'monospace', label: 'Monospace', example: 'Monospace' },
-    { key: 'bubble', label: 'Bubble', example: 'Bubble Text' }, // Yeni
-    { key: 'square', label: 'Square', example: 'Square Text' }, // Yeni
+    { key: 'bubble', label: 'Bubble', example: 'Bubble Text' },
+    { key: 'square', label: 'Square', example: 'Square Text' },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] pb-20 font-sans">
+    <div className="min-h-screen bg-slate-50 pb-20 font-sans relative selection:bg-blue-200 selection:text-blue-900">
+      
+      <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-purple-200/30 blur-[100px]"></div>
+        <div className="absolute top-[20%] right-[0%] w-[30%] h-[30%] rounded-full bg-blue-200/30 blur-[100px]"></div>
+        <div className="absolute -bottom-[10%] left-[20%] w-[30%] h-[30%] rounded-full bg-indigo-200/30 blur-[100px]"></div>
+      </div>
+
       <Header />
 
-      <main className="max-w-3xl mx-auto px-4 pt-24 sm:pt-32">
+      
+      <main className="max-w-4xl mx-auto px-4 pt-28 sm:pt-36 relative z-10">
         
-        {/* Başlık Alanı */}
-        <section className="text-center mb-10">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
-            Unicode Text Converter
+        <section className="text-center mb-12">
+          <h1 className="text-5xl sm:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-blue-700 to-indigo-900 animate-gradient-x">
+              Unicode Text Converter
+            </span>
           </h1>
-          <p className="text-lg text-gray-500 max-w-xl mx-auto">
-            Transform your text into unique Unicode styles for social media, bios, and beyond.
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            Transform your text into unique <span className="text-blue-600 font-semibold">Unicode styles</span> for social media, bios, and beyond.
           </p>
         </section>
 
-        {/* Giriş Input Bileşeni */}
         <TextInput 
           value={inputText}
           onChange={setInputText}
@@ -66,7 +76,6 @@ const App: React.FC = () => {
           onToggleSettings={() => setIsSettingsOpen(!isSettingsOpen)}
         />
 
-        {/* Ayarlar Paneli */}
         {isSettingsOpen && (
           <SettingsPanel 
             settings={settings} 
@@ -74,8 +83,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* Çıktı Kartları */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
           {styles.map((style) => (
             <OutputCard 
               key={style.key}
@@ -83,7 +91,7 @@ const App: React.FC = () => {
               fontLabel={style.label}
               example={style.example}
               inputText={inputText}
-              settings={settings} 
+              settings={settings}
             />
           ))}
         </div>
