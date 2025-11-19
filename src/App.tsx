@@ -31,10 +31,14 @@ const App: React.FC = () => {
   };
 
   const styles: FontStyle[] = [
-    { key: 'cursive', label: 'Cursive', example: 'Cursive Style' },
-    { key: 'bold', label: 'Bold Seriffed', example: 'Bold Style' },
+    { key: 'cursive', label: 'Script', example: 'Script Style' },
+    { key: 'bold', label: 'Bold', example: 'Bold Style' },
+    { key: 'boldItalic', label: 'Bold Italic', example: 'Bold Italic' }, // Yeni
     { key: 'doubleStruck', label: 'Double Struck', example: 'Double Struck' },
+    { key: 'gothic', label: 'Gothic', example: 'Gothic Style' }, // Yeni
     { key: 'monospace', label: 'Monospace', example: 'Monospace' },
+    { key: 'bubble', label: 'Bubble', example: 'Bubble Text' }, // Yeni
+    { key: 'square', label: 'Square', example: 'Square Text' }, // Yeni
   ];
 
   return (
