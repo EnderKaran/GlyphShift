@@ -2,19 +2,32 @@ import React, { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { transformText } from '../utils/textConverter';
 
+export interface ConversionSettings {
+  properNounsOnly: boolean;
+  excludeAcronyms: boolean;
+  excludeUrls: boolean;
+}
+
 interface OutputCardProps {
   inputText: string;
   fontKey: string;
   fontLabel: string;
   example: string;
+  settings: ConversionSettings;
 }
 
-const OutputCard: React.FC<OutputCardProps> = ({ inputText, fontKey, fontLabel, example }) => {
+const OutputCard: React.FC<OutputCardProps> = ({ 
+  inputText, 
+  fontKey, 
+  fontLabel, 
+  example,
+  settings 
+}) => {
   const [copied, setCopied] = useState<boolean>(false);
 
   const finalText = inputText 
-    ? transformText(inputText, fontKey) 
-    : transformText(example, fontKey);
+    ? transformText(inputText, fontKey, settings) 
+    : transformText(example, fontKey, settings);
 
   const handleCopy = () => {
     if (!finalText) return;
@@ -29,6 +42,7 @@ const OutputCard: React.FC<OutputCardProps> = ({ inputText, fontKey, fontLabel, 
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-100 transition-all duration-200 flex flex-col h-full group">
+      
       {/* Başlık */}
       <div className="flex justify-between items-start mb-3">
         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider group-hover:text-blue-500 transition-colors">

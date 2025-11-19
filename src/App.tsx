@@ -4,6 +4,12 @@ import TextInput from './components/TextInput';
 import SettingsPanel from './components/SettingsPanel';
 import OutputCard from './components/OutputCard';
 
+export interface ConversionSettings {
+  properNounsOnly: boolean;
+  excludeAcronyms: boolean;
+  excludeUrls: boolean;
+}
+
 interface FontStyle {
   key: string;
   label: string;
@@ -13,6 +19,16 @@ interface FontStyle {
 const App: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+
+  const [settings, setSettings] = useState<ConversionSettings>({
+    properNounsOnly: false, // Başlangıçta kapalı olsun
+    excludeAcronyms: true,
+    excludeUrls: false
+  });
+
+  const toggleSetting = (key: keyof ConversionSettings) => {
+    setSettings(prev => ({ ...prev, [key]: !prev[key] }));
+  };
 
   const styles: FontStyle[] = [
     { key: 'cursive', label: 'Cursive', example: 'Cursive Style' },
@@ -47,7 +63,12 @@ const App: React.FC = () => {
         />
 
         {/* Ayarlar Paneli */}
-        {isSettingsOpen && <SettingsPanel />}
+        {isSettingsOpen && (
+          <SettingsPanel 
+            settings={settings} 
+            onToggle={toggleSetting} 
+          />
+        )}
 
         {/* Çıktı Kartları */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
@@ -58,6 +79,7 @@ const App: React.FC = () => {
               fontLabel={style.label}
               example={style.example}
               inputText={inputText}
+              settings={settings} 
             />
           ))}
         </div>
