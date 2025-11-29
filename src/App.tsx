@@ -74,7 +74,7 @@ const App: React.FC = () => {
   const clearHistory = () => setHistory([]);
 
   // --- 4. TEMA YÖNETİMİ ---
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+  const [isDarkMode] = useState<boolean>(() => {
     const savedTheme = localStorage.getItem('glyphShift_theme');
     if (savedTheme) return savedTheme === 'dark';
     if (typeof window !== 'undefined') {
@@ -94,10 +94,7 @@ const App: React.FC = () => {
     }
   }, [isDarkMode]);
 
-  const toggleTheme = () => {
-    setIsDarkMode(prev => !prev);
-  };
-
+  
   const toggleSetting = (key: keyof ConversionSettings) => {
     setSettings(prev => ({ ...prev, [key]: !prev[key] }));
   };
@@ -144,7 +141,7 @@ const App: React.FC = () => {
         
         <section className="text-center mb-12">
           <h1 className="text-5xl sm:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-blue-700 to-indigo-900 dark:from-white dark:via-blue-400 dark:to-indigo-400 animate-gradient-x transition-colors duration-300">
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-gray-900 via-blue-700 to-indigo-900 dark:from-white dark:via-blue-400 dark:to-indigo-400 animate-gradient-x transition-colors duration-300">
               {t.title}
             </span>
           </h1>

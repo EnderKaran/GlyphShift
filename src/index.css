@@ -3,6 +3,7 @@
 /* TAILWIND v4 İÇİN DARK MODE AYARI */
 @custom-variant dark (&:where(.dark, .dark *));
 
+
 @layer utilities {
 
     /* Scrollbar Ana Ayarı */
