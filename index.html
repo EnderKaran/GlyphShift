@@ -1,14 +1,29 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/GlyphShift/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>glyphshift</title>
-    <script type="module" crossorigin src="/GlyphShift/assets/index-Bgxwg860.js"></script>
-    <link rel="stylesheet" crossorigin href="/GlyphShift/assets/index-Bc5OY32t.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/GlyphShift/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GlyphShift</title>
+
+  <script>
+    (function () {
+      // Sistem tercihine göre tema belirle
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = prefersDark ? 'dark' : 'light';
+
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="/GlyphShift/assets/index-TLVzM7Le.js"></script>
+  <link rel="stylesheet" crossorigin href="/GlyphShift/assets/index-BvZa8qMz.css">
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
 </html>
