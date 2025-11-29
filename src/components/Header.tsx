@@ -1,12 +1,15 @@
 import React from 'react';
+import { History } from 'lucide-react';
 import type { Language } from '../utils/types';
 
 interface HeaderProps {
   currentLang: Language;
   setLang: (lang: Language) => void;
+  onHistoryClick: () => void;
+  t: any;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentLang, setLang }) => {
+const Header: React.FC<HeaderProps> = ({ currentLang, setLang, onHistoryClick, t }) => {
   const languages: Language[] = ['EN', 'TR', 'FR', 'ES', 'DE'];
 
   return (
@@ -20,20 +23,35 @@ const Header: React.FC<HeaderProps> = ({ currentLang, setLang }) => {
             GlyphShift
           </span>
         </div>
-        <nav className="hidden sm:flex text-sm text-gray-500 space-x-1 font-medium">
-          {languages.map(lang => (
-            <button 
-              key={lang}
-              onClick={() => setLang(lang)}
-              className={`px-3 py-1 rounded-full transition-all duration-200 
-                ${currentLang === lang 
-                  ? 'bg-blue-100 text-blue-700 font-bold' 
-                  : 'hover:bg-gray-100 hover:text-blue-600'}`}
-            >
-              {lang}
-            </button>
-          ))}
-        </nav>
+        
+        <div className="flex items-center gap-3">
+          {/* Geçmiş Butonu */}
+          <button 
+            type="button"
+            onClick={onHistoryClick}
+            className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all"
+            title={t.historyBtn}
+          >
+            <History className="w-5 h-5" />
+          </button>
+
+          <div className="h-6 w-px bg-gray-200 mx-1 hidden sm:block"></div>
+
+          <nav className="hidden sm:flex text-sm text-gray-500 space-x-1 font-medium">
+            {languages.map(lang => (
+              <button 
+                key={lang}
+                onClick={() => setLang(lang)}
+                className={`px-3 py-1 rounded-full transition-all duration-200 
+                  ${currentLang === lang 
+                    ? 'bg-blue-100 text-blue-700 font-bold' 
+                    : 'hover:bg-gray-100 hover:text-blue-600'}`}
+              >
+                {lang}
+              </button>
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   );
