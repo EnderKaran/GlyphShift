@@ -5,29 +5,46 @@ import SettingsPanel from './components/SettingsPanel';
 import OutputCard from './components/OutputCard';
 import HistoryModal from './components/HistoryModal';
 import { TRANSLATIONS } from './utils/translations';
-// Tip tanımlarını import ediyoruz
 import type { Language, ConversionSettings, FontStyle, HistoryItem } from './utils/types';
 
 const App: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
-  const [language, setLanguage] = useState<Language>('TR');
   
-  // Geçmiş (History) ve Modal State'leri
-  const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  // --- 1. DİL YÖNETİMİ (PERSISTENCE) ---
+  // Başlangıçta localStorage'a bak, yoksa 'TR' yap
+  const [language, setLanguage] = useState<Language>(() => {
+    const savedLang = localStorage.getItem('glyphShift_lang');
+    return (savedLang as Language) || 'TR';
+  });
+
+  // Dil değişince kaydet
+  useEffect(() => {
+    localStorage.setItem('glyphShift_lang', language);
+  }, [language]);
 
   const t = TRANSLATIONS[language];
   
-  const [settings, setSettings] = useState<ConversionSettings>({
-    properNounsOnly: false,
-    excludeAcronyms: true,
-    excludeUrls: false
+  // --- 2. AYARLAR YÖNETİMİ (PERSISTENCE) ---
+  // Başlangıçta localStorage'a bak
+  const [settings, setSettings] = useState<ConversionSettings>(() => {
+    const savedSettings = localStorage.getItem('glyphShift_settings');
+    return savedSettings ? JSON.parse(savedSettings) : {
+      properNounsOnly: false,
+      excludeAcronyms: true,
+      excludeUrls: false
+    };
   });
 
-  // --- GEÇMİŞ YÖNETİMİ MANTIĞI ---
+  // Ayarlar değişince kaydet
+  useEffect(() => {
+    localStorage.setItem('glyphShift_settings', JSON.stringify(settings));
+  }, [settings]);
 
-  // 1. Uygulama açılınca geçmişi yükle
+  // --- 3. GEÇMİŞ YÖNETİMİ (PERSISTENCE) ---
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
   useEffect(() => {
     const savedHistory = localStorage.getItem('glyphShift_history');
     if (savedHistory) {
@@ -39,12 +56,10 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // 2. Geçmiş değişince kaydet
   useEffect(() => {
     localStorage.setItem('glyphShift_history', JSON.stringify(history));
   }, [history]);
 
-  // 3. Listeye ekleme fonksiyonu
   const addToHistory = (convertedText: string, label: string) => {
     const newItem: HistoryItem = {
       id: Date.now().toString(),
@@ -55,10 +70,7 @@ const App: React.FC = () => {
     };
 
     setHistory(prev => {
-      // Tekrarı önle
       if (prev.length > 0 && prev[0].text === newItem.text) return prev;
-      
-      // En başa ekle ve son 20 öğeyi tut
       return [newItem, ...prev].slice(0, 20);
     });
   };
@@ -69,25 +81,23 @@ const App: React.FC = () => {
     setSettings(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  // --- GÜNCELLENMİŞ FONT LİSTESİ ---
   const styles: FontStyle[] = [
     { key: 'cursive', label: 'Script', example: 'Script Style' },
     { key: 'bold', label: 'Bold', example: 'Bold Style' },
     { key: 'boldItalic', label: 'Bold Italic', example: 'Bold Italic' },
-    { key: 'smallCaps', label: 'Small Caps', example: 'Small Caps' }, // YENİ
     { key: 'doubleStruck', label: 'Double Struck', example: 'Double Struck' },
     { key: 'gothic', label: 'Gothic', example: 'Gothic Style' },
     { key: 'monospace', label: 'Monospace', example: 'Monospace' },
-    { key: 'upsideDown', label: 'Upside Down', example: 'uʍop ǝpısdn' }, // YENİ
     { key: 'bubble', label: 'Bubble', example: 'Bubble Text' },
     { key: 'square', label: 'Square', example: 'Square Text' },
-    { key: 'emojiMix', label: 'Emoji Mix', example: 'E✨m🔥o👻j👽i' }, // YENİ
+    { key: 'smallCaps', label: 'Small Caps', example: 'Small Caps' },
+    { key: 'upsideDown', label: 'Upside Down', example: 'uʍop ǝpısdn' },
+    { key: 'emojiMix', label: 'Emoji Mix', example: 'E✨m🔥o👻j👽i' },
   ];
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20 font-sans relative selection:bg-blue-200 selection:text-blue-900">
       
-      {/* Dekoratif Arka Plan */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-purple-200/30 blur-[100px]"></div>
         <div className="absolute top-[20%] right-[0%] w-[30%] h-[30%] rounded-full bg-blue-200/30 blur-[100px]"></div>
@@ -139,7 +149,6 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* Çıktı Kartları Listesi */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
           {styles.map((style) => (
             <OutputCard 
