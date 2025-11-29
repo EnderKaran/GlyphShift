@@ -3,52 +3,51 @@ import Header from './components/Header';
 import TextInput from './components/TextInput';
 import SettingsPanel from './components/SettingsPanel';
 import OutputCard from './components/OutputCard';
-import HistoryModal from './components/HistoryModal'; //Modal importu
+import HistoryModal from './components/HistoryModal';
 import { TRANSLATIONS } from './utils/translations';
+// Tip tanımlarını import ediyoruz
 import type { Language, ConversionSettings, FontStyle, HistoryItem } from './utils/types';
 
 const App: React.FC = () => {
-  // --- TEMEL STATE'LER ---
   const [inputText, setInputText] = useState<string>('');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [language, setLanguage] = useState<Language>('TR');
   
-  // --- YENİ: GEÇMİŞ VE MODAL STATE'LERİ ---
+  // Geçmiş (History) ve Modal State'leri
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
-  // Dil seçimine göre çeviri paketini al
   const t = TRANSLATIONS[language];
   
-  // Dönüştürme Ayarları
   const [settings, setSettings] = useState<ConversionSettings>({
     properNounsOnly: false,
     excludeAcronyms: true,
     excludeUrls: false
   });
 
+  // --- GEÇMİŞ YÖNETİMİ MANTIĞI ---
 
-  // 1. Uygulama ilk açıldığında localStorage'dan veriyi çek
+  // 1. Uygulama açılınca geçmişi yükle
   useEffect(() => {
     const savedHistory = localStorage.getItem('glyphShift_history');
     if (savedHistory) {
       try {
         setHistory(JSON.parse(savedHistory));
       } catch (e) {
-        console.error("Geçmiş verisi okunamadı:", e);
+        console.error("Geçmiş okunamadı", e);
       }
     }
   }, []);
 
-  // 2. 'history' state'i her değiştiğinde localStorage'ı güncelle
+  // 2. Geçmiş değişince kaydet
   useEffect(() => {
     localStorage.setItem('glyphShift_history', JSON.stringify(history));
   }, [history]);
 
-  // 3. Yeni bir kopyalama işlemi yapıldığında listeye ekle
+  // 3. Listeye ekleme fonksiyonu
   const addToHistory = (convertedText: string, label: string) => {
     const newItem: HistoryItem = {
-      id: Date.now().toString(), // Benzersiz ID (zaman damgası)
+      id: Date.now().toString(),
       text: convertedText,
       originalText: inputText,
       label: label,
@@ -56,58 +55,52 @@ const App: React.FC = () => {
     };
 
     setHistory(prev => {
-      // Eğer en son kopyalanan metin aynısıysa tekrar ekleme (Spam önleme)
-      if (prev.length > 0 && prev[0].text === newItem.text) {
-        return prev;
-      }
+      // Tekrarı önle
+      if (prev.length > 0 && prev[0].text === newItem.text) return prev;
       
-      // Yeni öğeyi en başa ekle ve listeyi son 20 öğe ile sınırla (Performans)
-      const newHistory = [newItem, ...prev].slice(0, 20);
-      return newHistory;
+      // En başa ekle ve son 20 öğeyi tut
+      return [newItem, ...prev].slice(0, 20);
     });
   };
 
-  // 4. Geçmişi temizle
-  const clearHistory = () => {
-    setHistory([]);
-  };
+  const clearHistory = () => setHistory([]);
 
-  // Ayarları değiştirme fonksiyonu
   const toggleSetting = (key: keyof ConversionSettings) => {
     setSettings(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  // Font Stilleri Listesi
+  // --- GÜNCELLENMİŞ FONT LİSTESİ ---
   const styles: FontStyle[] = [
     { key: 'cursive', label: 'Script', example: 'Script Style' },
     { key: 'bold', label: 'Bold', example: 'Bold Style' },
     { key: 'boldItalic', label: 'Bold Italic', example: 'Bold Italic' },
+    { key: 'smallCaps', label: 'Small Caps', example: 'Small Caps' }, // YENİ
     { key: 'doubleStruck', label: 'Double Struck', example: 'Double Struck' },
     { key: 'gothic', label: 'Gothic', example: 'Gothic Style' },
     { key: 'monospace', label: 'Monospace', example: 'Monospace' },
+    { key: 'upsideDown', label: 'Upside Down', example: 'uʍop ǝpısdn' }, // YENİ
     { key: 'bubble', label: 'Bubble', example: 'Bubble Text' },
     { key: 'square', label: 'Square', example: 'Square Text' },
+    { key: 'emojiMix', label: 'Emoji Mix', example: 'E✨m🔥o👻j👽i' }, // YENİ
   ];
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20 font-sans relative selection:bg-blue-200 selection:text-blue-900">
       
-      {/* Dekoratif Arka Plan Elementleri (Mesh Gradient) */}
+      {/* Dekoratif Arka Plan */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-purple-200/30 blur-[100px]"></div>
         <div className="absolute top-[20%] right-[0%] w-[30%] h-[30%] rounded-full bg-blue-200/30 blur-[100px]"></div>
         <div className="absolute -bottom-[10%] left-[20%] w-[30%] h-[30%] rounded-full bg-indigo-200/30 blur-[100px]"></div>
       </div>
 
-      {/* Header */}
       <Header 
         currentLang={language} 
         setLang={setLanguage} 
-        onHistoryClick={() => setIsHistoryOpen(true)} // Modalı açan olay
+        onHistoryClick={() => setIsHistoryOpen(true)}
         t={t}
       />
 
-      
       <HistoryModal 
         isOpen={isHistoryOpen}
         onClose={() => setIsHistoryOpen(false)}
@@ -118,7 +111,6 @@ const App: React.FC = () => {
 
       <main className="max-w-4xl mx-auto px-4 pt-28 sm:pt-36 relative z-10">
         
-        {/* Başlık Alanı */}
         <section className="text-center mb-12">
           <h1 className="text-5xl sm:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-blue-700 to-indigo-900 animate-gradient-x">
@@ -130,7 +122,6 @@ const App: React.FC = () => {
           </p>
         </section>
 
-        {/* Metin Giriş Alanı */}
         <TextInput 
           value={inputText}
           onChange={setInputText}
@@ -140,7 +131,6 @@ const App: React.FC = () => {
           t={t}
         />
 
-        {/* Ayarlar Paneli (Sadece açıkken görünür) */}
         {isSettingsOpen && (
           <SettingsPanel 
             settings={settings} 

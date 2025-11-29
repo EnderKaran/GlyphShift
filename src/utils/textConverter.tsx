@@ -1,17 +1,27 @@
-import nlp from 'compromise';
 import { FONTS, type CharMap } from '../components/characterMaps';
+import type { ConversionSettings } from './types';
 
-interface ConversionSettings {
-  properNounsOnly: boolean;
-  excludeAcronyms: boolean;
-  excludeUrls: boolean;
-}
+const applyFontToWord = (word: string, map: CharMap, fontKey?: string): string => {
+  // Upside Down için özel durum: Kelimeyi ters çevir
+  if (fontKey === 'upsideDown') {
+    return word
+      .split('')
+      .reverse() // Harfleri tersine diz
+      .map((char) => map[char] || char)
+      .join('');
+  }
 
-const applyFontToWord = (word: string, map: CharMap): string => {
-  return word
-    .split('')
-    .map((char) => map[char] || char)
-    .join('');
+  // Emoji Mix için özel durum: Her harfin yanına rastgele emoji
+  if (fontKey === 'emojiMix') {
+    const emojis = ['✨', '💖', '🌸', '🔥', '💀', '🤡', '👻', '👽', '🦄', '🌟'];
+    return word
+      .split('')
+      .map((char) => char + (Math.random() > 0.7 ? emojis[Math.floor(Math.random() * emojis.length)] : ''))
+      .join('');
+  }
+
+  // Normal haritalama
+  return word.split('').map((char) => map[char] || char).join('');
 };
 
 export const transformText = (
@@ -19,54 +29,59 @@ export const transformText = (
   fontKey: string, 
   settings?: ConversionSettings
 ): string => {
-  const map = FONTS[fontKey];
-  if (!map) return text;
-
-  if (!settings || (!settings.properNounsOnly && !settings.excludeAcronyms && !settings.excludeUrls)) {
-    return applyFontToWord(text, map);
+  
+  if (fontKey === 'upsideDown') {
+    const map = FONTS[fontKey];
+    // Map yoksa işlem yapma
+    if (!map) return text;
+    
+    return text
+      .split('') 
+      .reverse() 
+      .map((char) => map[char] || char) 
+      .join('');
   }
 
-  // --- NLP ANALİZİ ---
-  
-  const doc = nlp(text);
-  const terms = doc.termList();
+  const map = FONTS[fontKey];
+  if (!map && fontKey !== 'emojiMix') return text;
 
-  const processedText = terms.map((term: any) => {
-    const originalWord = term.text;
+  
+  if (!settings || (!settings.properNounsOnly && !settings.excludeAcronyms && !settings.excludeUrls)) {
+    return applyFontToWord(text, map || {}, fontKey);
+  }
+
+  const tokens = text.split(/((?:https?:\/\/|www\.)[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9À-ÿ]+)/g);
+
+  const processedText = tokens.map((token) => {
     
-    const tags = Array.from(term.tags || []) as string[];
-    
+    if (!token.trim() || !/[a-zA-Z0-9À-ÿ]/.test(token)) {
+      return token;
+    }
+
     let shouldConvert = true;
 
-    // KURAL 1: URL ve Email Koruması
-    if (settings.excludeUrls) {
-      if (tags.includes('Url') || tags.includes('Email') || tags.includes('Hashtag')) {
-        shouldConvert = false;
-      }
+    const isUrl = /^(https?:\/\/|www\.)/i.test(token) || /\.[a-z]{2,}$/i.test(token);
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(token);
+    
+    if (settings.excludeUrls && (isUrl || isEmail)) {
+      shouldConvert = false;
     }
 
-    // KURAL 2: Kısaltma (Acronym) Koruması
+    
     if (settings.excludeAcronyms && shouldConvert) {
-      if (tags.includes('Acronym') || (originalWord.length > 1 && /^[A-Z0-9]+$/.test(originalWord))) {
+      if (token.length > 1 && /^[A-Z0-9]+$/.test(token)) {
         shouldConvert = false;
       }
     }
 
-    // KURAL 3: Sadece Özel İsimleri Çevir
     if (settings.properNounsOnly && shouldConvert) {
-      const isProper = tags.includes('ProperNoun') || 
-                       tags.includes('Person') || 
-                       tags.includes('Place') || 
-                       tags.includes('Organization');
-      
-      if (!isProper) {
+      const isCapitalized = /^[A-Z]/.test(token);
+      if (!isCapitalized) {
         shouldConvert = false;
       }
     }
 
-    const finalWord = shouldConvert ? applyFontToWord(originalWord, map) : originalWord;
-
-    return (term.pre || '') + finalWord + (term.post || '');
+    return shouldConvert ? applyFontToWord(token, map || {}, fontKey) : token;
   });
 
   return processedText.join('');
