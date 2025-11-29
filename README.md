@@ -1,73 +1,127 @@
-# React + TypeScript + Vite
+# GlyphShift - Akıllı Unicode Metin Dönüştürücü
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sıradan metinleri, sosyal medya ve biyografiler için dikkat çekici Unicode sanatına dönüştüren akıllı, modern ve çok dilli bir araç.
 
-Currently, two official plugins are available:
+Bu proje, React, TypeScript ve Tailwind CSS kullanılarak geliştirilmiş, performans odaklı bir "Single-File Component" mimarisini sergiler. Harici ağır NLP kütüphanelerine ihtiyaç duymadan, Regex (Düzenli İfadeler) tabanlı özel bir motor ile metinleri akıllıca analiz eder ve dönüştürür.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**[Canlı Demoyu Görüntüle](https://enderkaran.github.io/GlyphShift/)**
 
-## React Compiler
+<img width="1887" height="857" alt="Ekran görüntüsü 2025-11-20 004108" src="https://github.com/user-attachments/assets/e92f9fb1-49e9-49f9-a323-0459eff1bdbd" />
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
+## Öne Çıkan Özellikler
 
-## Expanding the ESLint configuration
+Bu proje, modern frontend geliştirme tekniklerini ve kullanıcı deneyimi (UX) odaklı yaklaşımları birleştirir:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Regex Tabanlı Akıllı Analiz Motoru
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Bağlamsal Farkındalık:** Harici yapay zeka veya NLP kütüphanesi (örneğin compromise.js) kullanmadan, özel yazılmış Regex algoritmaları ile metni analiz eder.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **URL ve E-posta Koruması:** Metin içindeki linkleri (https://www.google.com/search?q=google.com) ve e-postaları (test@mail.com) algılar ve bunların bozulmasını engeller.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Kısaltma (Acronym) Tespiti:** Sadece büyük harflerden oluşan kısaltmaları (örneğin NASA, TBMM, USA) tespit eder ve okunabilirliği korumak için dönüştürmez.
+
+- **Özel İsim Filtresi:** "Sadece Özel İsimleri Çevir" modu ile cümledeki sadece baş harfi büyük kelimeleri (İsimler, Şehirler) hedefler.
+
+### 2. Zengin Unicode Kütüphanesi & Mapping
+
+- **8 Farklı Stil:** Cursive, Bold, Gothic, Double Struck, Bubble, Square gibi popüler Unicode setlerini içeren kapsamlı bir karakter haritası (CharMap) mimarisi.
+
+- **Genişletilebilir Yapı:** Yeni bir font eklemek, sadece FONTS objesine yeni bir anahtar-değer seti eklemek kadar basittir.
+
+### 3. Dahili Çoklu Dil Desteği (i18n)
+
+- **Hafif Çözüm:** i18next gibi büyük paketler yerine, React State ve Props kullanılarak geliştirilmiş, sıfır bağımlılıklı (dependency-free) bir yerelleştirme sistemi.
+
+### 4 Dil Desteği: İngilizce (EN), Türkçe (TR), Fransızca (FR), İspanyolca (ES) ve Almanca (DE) arasında anlık geçiş imkanı.
+
+### 5. Modern UI & Mikro Etkileşimler
+
+- **Glassmorphism & Mesh Gradients:** Backdrop-blur ve katmanlı arka planlar kullanılarak oluşturulmuş derinlikli ve modern tasarım.
+
+- **Dinamik Etkileşimler:** Lucide React ikonları ile zenginleştirilmiş, üzerine gelindiğinde (hover) tepki veren kartlar ve butonlar.
+
+- **Kullanıcı Geri Bildirimi:** Kopyalama işlemi sonrası görsel geri bildirim (Buton değişimi, renk geçişi).
+
+## Teknoloji Yığını
+
+Bu projenin temelini oluşturan ana teknolojiler:
+
+- **Framework: React 18/19**
+
+- **Dil: TypeScript (Tip güvenliği ve Interface yapıları için)**
+
+- **Stil: Tailwind CSS (Utility-first styling ve animasyonlar)**
+
+- **İkon Seti: Lucide React**
+
+- **Build Aracı: Vite**
+--- 
+## Başlarken
+
+Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin.
+
+### Kurulum
+
+1.  **Depoyu Klonlayın:**
+
+```bash
+git clone [https://github.com/EnderKaran/GlyphShift.git](https://github.com/EnderKaran/GlyphShift.git)
+cd GlyphShift
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2.  **Bağımlılıkları Yükleyin:**
+    ```bash
+    npm install
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. **Uygulamayı Başlatın:**
+
+```bash
+    npm run dev
+   ```
+
+Tarayıcınızda http://localhost:5173 adresine giderek uygulamayı görüntüleyebilirsiniz.
+---
+
+## Proje Mimarisi (Single File Logic)
+
+Bu proje, belirli bir dağıtım ortamı gereği Tek Dosya (Single Component) mimarisi üzerine kurulmuştur ancak mantıksal olarak katmanlara ayrılmıştır:
+
 ```
+src/App.tsx
+│
+├── 1. TİP TANIMLARI (TYPES)
+│   ├── Language, ConversionSettings, FontStyle arayüzleri
+│
+├── 2. ÇEVİRİ KATMANI (DATA)
+│   ├── TRANSLATIONS (5 dil için sözlük objesi)
+│
+├── 3. FONT HARİTALARI (DATA)
+│   ├── FONTS (Cursive, Bold, Gothic vb. karakter haritaları)
+│
+├── 4. MANTIK FONKSİYONLARI (LOGIC)
+│   ├── transformText() -> Regex ve Mapping işlemlerinin yapıldığı ana beyin.
+│
+├── 5. UI BİLEŞENLERİ (COMPONENTS)
+│   ├── Header (Dil seçimi ve Logo)
+│   ├── TextInput (Metin girişi)
+│   ├── SettingsPanel (Ayar anahtarları)
+│   ├── OutputCard (Sonuç kartı ve kopyalama işlevi)
+│
+└── 6. ANA UYGULAMA (APP)
+    └── State Yönetimi ve Bileşenlerin Birleştirilmesi
+```
+---
+
+## Gelecek Planları
+
+[ ] Tarayıcı Eklentisi (Chrome Extension) olarak paketlenmesi.
+
+[ ] Favori stilleri kaydetme özelliği (LocalStorage).
+
+[ ] Daha fazla Unicode sembol kütüphanesi.
+
+[ ] Karanlık Mod (Dark Mode) desteği.
+
