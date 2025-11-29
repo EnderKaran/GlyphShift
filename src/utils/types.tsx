@@ -12,3 +12,11 @@ export interface FontStyle {
   label: string;
   example: string;
 }
+
+export interface HistoryItem {
+  id: string;
+  text: string;
+  originalText: string;
+  label: string;
+  timestamp: number;
+}
