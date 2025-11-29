@@ -9,11 +9,13 @@ interface OutputCardProps {
   fontLabel: string;
   example: string;
   settings: ConversionSettings;
-  t: any; // Çeviri nesnesi
+  t: any;
+  // YENİ: Kopyalama başarılı olduğunda tetiklenecek fonksiyon
+  onCopySuccess: (text: string, label: string) => void;
 }
 
 const OutputCard: React.FC<OutputCardProps> = ({ 
-  inputText, fontKey, fontLabel, example, settings, t
+  inputText, fontKey, fontLabel, example, settings, t, onCopySuccess
 }) => {
   const [copied, setCopied] = useState<boolean>(false);
 
@@ -23,9 +25,16 @@ const OutputCard: React.FC<OutputCardProps> = ({
 
   const handleCopy = () => {
     if (!finalText) return;
+    
     navigator.clipboard.writeText(finalText)
       .then(() => {
         setCopied(true);
+        
+        // YENİ: Eğer giriş metni boş değilse, geçmişe ekleme işlemini tetikle
+        if (inputText.trim().length > 0) {
+          onCopySuccess(finalText, fontLabel);
+        }
+
         setTimeout(() => setCopied(false), 2000);
       })
       .catch(err => console.error('Kopyalama hatası:', err));
@@ -52,6 +61,7 @@ const OutputCard: React.FC<OutputCardProps> = ({
 
       <div className="mt-5 pt-4 border-t border-gray-50 flex justify-end relative z-10">
         <button 
+          type="button"
           onClick={handleCopy}
           className={`flex items-center text-sm font-bold px-4 py-2 rounded-xl transition-all duration-200 transform active:scale-95
             ${copied 
