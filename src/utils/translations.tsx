@@ -12,7 +12,13 @@ export const TRANSLATIONS: Record<Language, any> = {
     copy: 'Copy',
     copied: 'Copied!',
     clear: 'Clear text',
-    settingsBtn: 'Settings'
+    settingsBtn: 'Settings',
+    close: 'Close',
+    // History Alanı
+    historyBtn: 'History',
+    historyTitle: 'Copy History',
+    historyEmpty: 'No history yet. Start copying!',
+    clearHistory: 'Clear All'
   },
   TR: {
     title: 'Unicode Metin Dönüştürücü',
@@ -25,45 +31,66 @@ export const TRANSLATIONS: Record<Language, any> = {
     copy: 'Kopyala',
     copied: 'Kopyalandı!',
     clear: 'Temizle',
-    settingsBtn: 'Ayarlar'
+    settingsBtn: 'Ayarlar',
+    close: 'Kapat',
+    // History Alanı
+    historyBtn: 'Geçmiş',
+    historyTitle: 'Kopyalama Geçmişi',
+    historyEmpty: 'Henüz geçmiş yok. Kopyalamaya başla!',
+    clearHistory: 'Tümünü Temizle'
   },
   FR: {
     title: 'Convertisseur Texte Unicode',
-    subtitle: 'Transformez votre texte en styles Unicode uniques pour les réseaux sociaux.',
-    placeholder: 'Tapez ou collez votre texte ici...',
-    settingsTitle: 'Paramètres de Conversion',
-    settingProper: 'Convertir uniquement les noms propres',
-    settingAcronyms: 'Exclure les acronymes',
-    settingUrls: 'Exclure les URL et e-mails',
+    subtitle: 'Transformez votre texte en styles Unicode uniques.',
+    placeholder: 'Tapez votre texte ici...',
+    settingsTitle: 'Paramètres',
+    settingProper: 'Noms propres',
+    settingAcronyms: 'Acronymes',
+    settingUrls: 'Exclure URLs',
     copy: 'Copier',
     copied: 'Copié!',
     clear: 'Effacer',
-    settingsBtn: 'Réglages'
+    settingsBtn: 'Réglages',
+    close: 'Fermer',
+    historyBtn: 'Historique',
+    historyTitle: 'Historique',
+    historyEmpty: 'Vide',
+    clearHistory: 'Effacer tout'
   },
   ES: {
     title: 'Convertidor de Texto Unicode',
-    subtitle: 'Transforma tu texto en estilos Unicode únicos para redes sociales.',
-    placeholder: 'Escribe o pega tu texto aquí...',
-    settingsTitle: 'Configuración Inteligente',
-    settingProper: 'Convertir solo nombres propios',
-    settingAcronyms: 'Excluir siglas en mayúsculas',
-    settingUrls: 'Excluir URL y correos',
+    subtitle: 'Transforma tu texto en estilos Unicode únicos.',
+    placeholder: 'Escribe tu texto aquí...',
+    settingsTitle: 'Ajustes',
+    settingProper: 'Nombres propios',
+    settingAcronyms: 'Siglas',
+    settingUrls: 'Excluir URLs',
     copy: 'Copiar',
     copied: '¡Copiado!',
     clear: 'Borrar',
-    settingsBtn: 'Ajustes'
+    settingsBtn: 'Ajustes',
+    close: 'Cerrar',
+    historyBtn: 'Historial',
+    historyTitle: 'Historial',
+    historyEmpty: 'Vacío',
+    clearHistory: 'Borrar todo'
   },
   DE: {
     title: 'Unicode Textkonverter',
-    subtitle: 'Verwandeln Sie Ihren Text in einzigartige Unicode-Stile.',
-    placeholder: 'Geben Sie hier Ihren Text ein...',
-    settingsTitle: 'Intelligente Einstellungen',
-    settingProper: 'Nur Eigennamen umwandeln',
-    settingAcronyms: 'Akronyme ausschließen',
-    settingUrls: 'URLs und E-Mails ausschließen',
+    subtitle: 'Verwandeln Sie Ihren Text in Unicode-Stile.',
+    placeholder: 'Text hier eingeben...',
+    settingsTitle: 'Einstellungen',
+    settingProper: 'Eigennamen',
+    settingAcronyms: 'Akronyme',
+    settingUrls: 'URLs ausschließen',
     copy: 'Kopieren',
     copied: 'Kopiert!',
     clear: 'Löschen',
-    settingsBtn: 'Einstellungen'
+    settingsBtn: 'Einstellungen',
+    close: 'Schließen',
+    historyBtn: 'Verlauf',
+    historyTitle: 'Verlauf',
+    historyEmpty: 'Leer',
+    clearHistory: 'Alles löschen'
   }
 };
