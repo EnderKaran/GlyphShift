@@ -1,4 +1,3 @@
-// Ortak Tip Tanımları
 export type Language = 'EN' | 'TR' | 'FR' | 'ES' | 'DE';
 
 export interface ConversionSettings {
@@ -20,3 +19,5 @@ export interface HistoryItem {
   label: string;
   timestamp: number;
 }
+
+export type CharMap = Record<string, string>;

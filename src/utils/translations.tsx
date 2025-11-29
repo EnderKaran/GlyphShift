@@ -18,7 +18,8 @@ export const TRANSLATIONS: Record<Language, any> = {
     historyBtn: 'History',
     historyTitle: 'Copy History',
     historyEmpty: 'No history yet. Start copying!',
-    clearHistory: 'Clear All'
+    clearHistory: 'Clear All',
+    themeBtn: 'Toggle Theme'
   },
   TR: {
     title: 'Unicode Metin Dönüştürücü',
@@ -37,7 +38,8 @@ export const TRANSLATIONS: Record<Language, any> = {
     historyBtn: 'Geçmiş',
     historyTitle: 'Kopyalama Geçmişi',
     historyEmpty: 'Henüz geçmiş yok. Kopyalamaya başla!',
-    clearHistory: 'Tümünü Temizle'
+    clearHistory: 'Tümünü Temizle',
+    themeBtn: 'Temayı Değiştir'
   },
   FR: {
     title: 'Convertisseur Texte Unicode',
@@ -55,7 +57,8 @@ export const TRANSLATIONS: Record<Language, any> = {
     historyBtn: 'Historique',
     historyTitle: 'Historique',
     historyEmpty: 'Vide',
-    clearHistory: 'Effacer tout'
+    clearHistory: 'Effacer tout',
+    themeBtn: 'Changer de thème',
   },
   ES: {
     title: 'Convertidor de Texto Unicode',
@@ -73,7 +76,8 @@ export const TRANSLATIONS: Record<Language, any> = {
     historyBtn: 'Historial',
     historyTitle: 'Historial',
     historyEmpty: 'Vacío',
-    clearHistory: 'Borrar todo'
+    clearHistory: 'Borrar todo',
+    themeBtn: 'Cambiar tema',
   },
   DE: {
     title: 'Unicode Textkonverter',
@@ -91,6 +95,7 @@ export const TRANSLATIONS: Record<Language, any> = {
     historyBtn: 'Verlauf',
     historyTitle: 'Verlauf',
     historyEmpty: 'Leer',
-    clearHistory: 'Alles löschen'
+    clearHistory: 'Alles löschen',
+    themeBtn: 'Design wechseln',
   }
 };

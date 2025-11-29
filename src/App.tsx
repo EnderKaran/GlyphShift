@@ -11,22 +11,19 @@ const App: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   
-  // --- 1. DİL YÖNETİMİ (PERSISTENCE) ---
-  // Başlangıçta localStorage'a bak, yoksa 'TR' yap
+  // --- 1. DİL YÖNETİMİ ---
   const [language, setLanguage] = useState<Language>(() => {
     const savedLang = localStorage.getItem('glyphShift_lang');
     return (savedLang as Language) || 'TR';
   });
 
-  // Dil değişince kaydet
   useEffect(() => {
     localStorage.setItem('glyphShift_lang', language);
   }, [language]);
 
   const t = TRANSLATIONS[language];
   
-  // --- 2. AYARLAR YÖNETİMİ (PERSISTENCE) ---
-  // Başlangıçta localStorage'a bak
+  // --- 2. AYARLAR ---
   const [settings, setSettings] = useState<ConversionSettings>(() => {
     const savedSettings = localStorage.getItem('glyphShift_settings');
     return savedSettings ? JSON.parse(savedSettings) : {
@@ -36,12 +33,11 @@ const App: React.FC = () => {
     };
   });
 
-  // Ayarlar değişince kaydet
   useEffect(() => {
     localStorage.setItem('glyphShift_settings', JSON.stringify(settings));
   }, [settings]);
 
-  // --- 3. GEÇMİŞ YÖNETİMİ (PERSISTENCE) ---
+  // --- 3. GEÇMİŞ YÖNETİMİ ---
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
@@ -77,6 +73,31 @@ const App: React.FC = () => {
 
   const clearHistory = () => setHistory([]);
 
+  // --- 4. TEMA YÖNETİMİ ---
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    const savedTheme = localStorage.getItem('glyphShift_theme');
+    if (savedTheme) return savedTheme === 'dark';
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    if (isDarkMode) {
+      htmlElement.classList.add('dark');
+      localStorage.setItem('glyphShift_theme', 'dark');
+    } else {
+      htmlElement.classList.remove('dark');
+      localStorage.setItem('glyphShift_theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
   const toggleSetting = (key: keyof ConversionSettings) => {
     setSettings(prev => ({ ...prev, [key]: !prev[key] }));
   };
@@ -96,12 +117,12 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-20 font-sans relative selection:bg-blue-200 selection:text-blue-900">
+    <div className="min-h-screen transition-colors duration-300 ease-in-out bg-slate-50 dark:bg-slate-950 pb-20 font-sans relative selection:bg-blue-200 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100">
       
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-purple-200/30 blur-[100px]"></div>
-        <div className="absolute top-[20%] right-[0%] w-[30%] h-[30%] rounded-full bg-blue-200/30 blur-[100px]"></div>
-        <div className="absolute -bottom-[10%] left-[20%] w-[30%] h-[30%] rounded-full bg-indigo-200/30 blur-[100px]"></div>
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-purple-200/30 dark:bg-purple-900/20 blur-[100px] transition-colors duration-500"></div>
+        <div className="absolute top-[20%] right-[0%] w-[30%] h-[30%] rounded-full bg-blue-200/30 dark:bg-blue-900/20 blur-[100px] transition-colors duration-500"></div>
+        <div className="absolute -bottom-[10%] left-[20%] w-[30%] h-[30%] rounded-full bg-indigo-200/30 dark:bg-indigo-900/20 blur-[100px] transition-colors duration-500"></div>
       </div>
 
       <Header 
@@ -123,11 +144,11 @@ const App: React.FC = () => {
         
         <section className="text-center mb-12">
           <h1 className="text-5xl sm:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-blue-700 to-indigo-900 animate-gradient-x">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-blue-700 to-indigo-900 dark:from-white dark:via-blue-400 dark:to-indigo-400 animate-gradient-x transition-colors duration-300">
               {t.title}
             </span>
           </h1>
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed transition-colors duration-300">
             {t.subtitle}
           </p>
         </section>

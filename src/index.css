@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+/* TAILWIND v4 İÇİN DARK MODE AYARI */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer utilities {
+
+    /* Scrollbar Ana Ayarı */
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    /* Scrollbar Yolu (Arka Planı) */
+    .scrollbar-thin::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Scrollbar Tutacağı (Light Mode) */
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-color: #e5e7eb;
+        border-radius: 20px;
+    }
+
+    /* Scrollbar Tutacağı (Dark Mode) */
+    .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-color: #334155;
+        
+    }
+
+    /* Hover Efekti */
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background-color: #d1d5db;
+        
+    }
+
+    .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background-color: #475569;
+        
+    }
+}
