@@ -6,7 +6,11 @@ Bu proje, React, TypeScript ve Tailwind CSS kullanılarak geliştirilmiş, perfo
 
 **[Canlı Demoyu Görüntüle](https://enderkaran.github.io/GlyphShift/)**
 
+# Ekran Görüntüsü
 <img width="1887" height="857" alt="Ekran görüntüsü 2025-11-20 004108" src="https://github.com/user-attachments/assets/e92f9fb1-49e9-49f9-a323-0459eff1bdbd" />
+
+# Video
+https://github.com/user-attachments/assets/9f311e6a-9bae-4686-8a82-8cce79a4ab2c
 
 ---
 ## Öne Çıkan Özellikler
