@@ -2,7 +2,7 @@
 
 Sıradan metinleri, sosyal medya ve biyografiler için dikkat çekici Unicode sanatına dönüştüren akıllı, modern ve çok dilli bir araç.
 
-Bu proje, React, TypeScript ve Tailwind CSS kullanılarak geliştirilmiş, performans odaklı bir "Single-File Component" mimarisini sergiler. Harici ağır NLP kütüphanelerine ihtiyaç duymadan, Regex (Düzenli İfadeler) tabanlı özel bir motor ile metinleri akıllıca analiz eder ve dönüştürür.
+Bu proje, React, TypeScript ve Tailwind CSS kullanılarak geliştirilmiş, performans odaklı bir "Single-File Logic" mimarisini sergiler. Harici ağır NLP kütüphanelerine ihtiyaç duymadan, Regex (Düzenli İfadeler) tabanlı özel bir motor ile metinleri akıllıca analiz eder ve dönüştürür.
 
 **[Canlı Demoyu Görüntüle](https://enderkaran.github.io/GlyphShift/)**
 
@@ -13,11 +13,11 @@ Bu proje, React, TypeScript ve Tailwind CSS kullanılarak geliştirilmiş, perfo
 
 Bu proje, modern frontend geliştirme tekniklerini ve kullanıcı deneyimi (UX) odaklı yaklaşımları birleştirir:
 
-### 1. Regex Tabanlı Akıllı Analiz Motoru
+### 1. Akıllı Metin Analizi (Context Awareness)
 
-- **Bağlamsal Farkındalık:** Harici yapay zeka veya NLP kütüphanesi (örneğin compromise.js) kullanmadan, özel yazılmış Regex algoritmaları ile metni analiz eder.
+- **Regex Motoru:** Ağır yapay zeka kütüphaneleri yerine, performans odaklı özel Regex algoritmalarıyla metni milisaniyeler içinde analiz eder.
 
-- **URL ve E-posta Koruması:** Metin içindeki linkleri (https://www.google.com/search?q=google.com) ve e-postaları (test@mail.com) algılar ve bunların bozulmasını engeller.
+- **Koruma Kalkanı:** URL'leri (google.com), E-postaları (test@mail.com) ve Hashtag'leri (#react) otomatik algılar ve bunları bozmadan korur.
 
 - **Kısaltma (Acronym) Tespiti:** Sadece büyük harflerden oluşan kısaltmaları (örneğin NASA, TBMM, USA) tespit eder ve okunabilirliği korumak için dönüştürmez.
 
@@ -25,24 +25,30 @@ Bu proje, modern frontend geliştirme tekniklerini ve kullanıcı deneyimi (UX) 
 
 ### 2. Zengin Unicode Kütüphanesi & Mapping
 
-- **8 Farklı Stil:** Cursive, Bold, Gothic, Double Struck, Bubble, Square gibi popüler Unicode setlerini içeren kapsamlı bir karakter haritası (CharMap) mimarisi.
+- **11 Farklı Stil:** Cursive, Bold, Gothic, Double Struck, Bubble, Square, Small Caps, Upside Down (Ters Metin) ve Emoji Mix gibi popüler stilleri içerir.
 
 - **Genişletilebilir Yapı:** Yeni bir font eklemek, sadece FONTS objesine yeni bir anahtar-değer seti eklemek kadar basittir.
+  
+### 3. Kalıcı Kullanıcı Deneyimi (Persistence)
 
-### 3. Dahili Çoklu Dil Desteği (i18n)
+- **Ayarları Hatırlar:** Dil seçimi, tema tercihi (Dark/Light) ve dönüşüm ayarları localStorage üzerine kaydedilir. Tarayıcıyı kapatsanız bile tercihleriniz korunur.
+- **Kopyalama Geçmişi:** Son kopyalanan 20 metni hafızada tutar. Kullanıcılar geçmiş panelinden eski dönüşümlerine tek tıkla ulaşabilir.
 
-- **Hafif Çözüm:** i18next gibi büyük paketler yerine, React State ve Props kullanılarak geliştirilmiş, sıfır bağımlılıklı (dependency-free) bir yerelleştirme sistemi.
+### 4. Modern Arayüz & Dark Mode
 
-### 4 Dil Desteği: İngilizce (EN), Türkçe (TR), Fransızca (FR), İspanyolca (ES) ve Almanca (DE) arasında anlık geçiş imkanı.
+- **Karanlık Mod:** Tailwind CSS'in dark: varyantları ile oluşturulmuş, sistem tercihlerine duyarlı ve manuel değiştirilebilen profesyonel bir karanlık tema.
 
-### 5. Modern UI & Mikro Etkileşimler
+- **Glassmorphism:** backdrop-blur ve katmanlı arka planlar (Mesh Gradients) kullanılarak oluşturulmuş derinlikli tasarım.
 
-- **Glassmorphism & Mesh Gradients:** Backdrop-blur ve katmanlı arka planlar kullanılarak oluşturulmuş derinlikli ve modern tasarım.
+- **Mikro Etkileşimler: ** Lucide React ikonları ve hover efektleri ile zenginleştirilmiş interaktif bileşenler.
 
-- **Dinamik Etkileşimler:** Lucide React ikonları ile zenginleştirilmiş, üzerine gelindiğinde (hover) tepki veren kartlar ve butonlar.
+### 5. Çoklu Dil Desteği (i18n)
 
-- **Kullanıcı Geri Bildirimi:** Kopyalama işlemi sonrası görsel geri bildirim (Buton değişimi, renk geçişi).
+- **5 Dil:** İngilizce (EN), Türkçe (TR), Fransızca (FR), İspanyolca (ES) ve Almanca (DE) arasında anlık geçiş imkanı.
+- **Hafif Altyapı:** Harici kütüphane karmaşası olmadan, React State tabanlı yerelleştirme sistemi.
 
+
+  
 ## Teknoloji Yığını
 
 Bu projenin temelini oluşturan ana teknolojiler:
@@ -90,38 +96,35 @@ Tarayıcınızda http://localhost:5173 adresine giderek uygulamayı görüntüle
 Bu proje, belirli bir dağıtım ortamı gereği Tek Dosya (Single Component) mimarisi üzerine kurulmuştur ancak mantıksal olarak katmanlara ayrılmıştır:
 
 ```
-src/App.tsx
+src/
+├── components/          # UI Bileşenleri
+│   ├── Header.tsx       # Üst menü ve navigasyon
+│   ├── TextInput.tsx    # Metin giriş alanı
+│   ├── SettingsPanel.tsx # Ayar düğmeleri
+│   ├── OutputCard.tsx   # Sonuç kartları
+│   ├── HistoryModal.tsx # Geçmiş paneli
+│   └── ThemeToggle.tsx  # Tema değiştirici
 │
-├── 1. TİP TANIMLARI (TYPES)
-│   ├── Language, ConversionSettings, FontStyle arayüzleri
+├── hooks/               # Özel React Hook'ları
+│   └── useTheme.ts      # Tema yönetimi ve localStorage mantığı
 │
-├── 2. ÇEVİRİ KATMANI (DATA)
-│   ├── TRANSLATIONS (5 dil için sözlük objesi)
+├── utils/               # Yardımcı Fonksiyonlar ve Veriler
+│   ├── types.ts         # TypeScript tip tanımları
+│   ├── translations.ts  # Çoklu dil sözlüğü
+│   ├── characterMaps.ts # Unicode font haritaları
+│   └── textConverter.ts # Regex tabanlı dönüştürme motoru
 │
-├── 3. FONT HARİTALARI (DATA)
-│   ├── FONTS (Cursive, Bold, Gothic vb. karakter haritaları)
-│
-├── 4. MANTIK FONKSİYONLARI (LOGIC)
-│   ├── transformText() -> Regex ve Mapping işlemlerinin yapıldığı ana beyin.
-│
-├── 5. UI BİLEŞENLERİ (COMPONENTS)
-│   ├── Header (Dil seçimi ve Logo)
-│   ├── TextInput (Metin girişi)
-│   ├── SettingsPanel (Ayar anahtarları)
-│   ├── OutputCard (Sonuç kartı ve kopyalama işlevi)
-│
-└── 6. ANA UYGULAMA (APP)
-    └── State Yönetimi ve Bileşenlerin Birleştirilmesi
+└── App.tsx              # Ana uygulama ve state yönetimi
 ```
 ---
 
 ## Gelecek Planları
 
-[ ] Tarayıcı Eklentisi (Chrome Extension) olarak paketlenmesi.
+[ ] Tarayıcı Uzantısı: Projenin manifest.json ile paketlenerek Chrome/Edge mağazasına eklenmesi.
 
-[ ] Favori stilleri kaydetme özelliği (LocalStorage).
+[ ] Favori Stiller: Kullanıcıların en çok kullandığı kartları en başa sabitleyebilmesi.
 
-[ ] Daha fazla Unicode sembol kütüphanesi.
+[ ] Daha Fazla Font: Şekilli semboller ve ASCII art desteği.
 
-[ ] Karanlık Mod (Dark Mode) desteği.
+[ ] PWA Desteği: Mobil cihazlarda uygulama gibi çalışabilmesi.
 
